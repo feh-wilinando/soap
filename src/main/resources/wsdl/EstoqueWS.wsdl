@@ -1,0 +1,53 @@
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webservice.fj36.caelum.com.br/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://webservice.fj36.caelum.com.br/" name="EstoqueWSService">
+    <types>
+        <xs:schema xmlns:tns="http://webservice.fj36.caelum.com.br/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webservice.fj36.caelum.com.br/">
+            <xs:element name="getItemEstoque" type="tns:getItemEstoque"/>
+            <xs:element name="getItemEstoqueResponse" type="tns:getItemEstoqueResponse"/>
+            <xs:complexType name="getItemEstoque">
+                <xs:sequence>
+                    <xs:element name="codigo" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getItemEstoqueResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="tns:itemEstoque" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="itemEstoque">
+                <xs:sequence>
+                    <xs:element name="codigo" type="xs:string" minOccurs="0"/>
+                    <xs:element name="quantidade" type="xs:int" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </types>
+    <message name="getItemEstoque">
+        <part name="parameters" element="tns:getItemEstoque"/>
+    </message>
+    <message name="getItemEstoqueResponse">
+        <part name="parameters" element="tns:getItemEstoqueResponse"/>
+    </message>
+    <portType name="EstoqueWSEndpoint">
+        <operation name="getItemEstoque">
+            <input message="tns:getItemEstoque"/>
+            <output message="tns:getItemEstoqueResponse"/>
+        </operation>
+    </portType>
+    <binding name="EstoqueWSPortBinding" type="tns:EstoqueWSEndpoint">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="getItemEstoque">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="EstoqueWSService">
+        <port name="EstoqueWSPort" binding="tns:EstoqueWSPortBinding">
+            <soap:address location="http://localhost:8080/ws/estoqueWS"/>
+        </port>
+    </service>
+</definitions>
